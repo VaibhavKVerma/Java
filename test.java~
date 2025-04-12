@@ -1,0 +1,130 @@
+enum AsyncAction {
+    order_create,
+    order_refund,
+    order_payment_done,
+    Order_booking_type_change
+}
+
+record AsyncActionRequest {
+    private Order order;
+    private AsyncActionName action;
+}
+
+
+class AsyncProcessor {
+    private final AsyncActionHandlerFactory handlerFactory;
+
+    AsyncProcessor(AsyncActionHandlerFactory handlerFactory) {
+        this.handlerFactory = handlerFactory;
+    }
+
+    @Async
+    public void processAsyncCall(AsyncActionRequest asyncObject) {
+        AsyncActionCommand command = handlerFactory.createCommand(asyncObject.getAction());
+        command.execute(asyncObject.getOrder());
+    }
+
+}
+
+interface AsyncActionHandlerFactory {
+    AsyncActionCommand createCommand(AsyncAction action);
+}
+
+class AsyncActionHandlerFactoryImpl implements AsyncActionHandlerFactory {
+    private final OrderEventService orderEventService;
+
+    AsyncActionHandlerFactoryImpl(OrderEventService orderEventService) {
+        this.orderEventService = orderEventService;
+    }
+
+    @Override
+    public AsyncActionCommand createCommand(AsyncAction action) {
+        switch(action) {
+            case order_create:
+                return new OrderCreateCommand(orderEventService);
+            case order_refund:
+                return new OrderRefundCommand(orderEventService);
+            case order_payment_done:
+                return new OrderPaymentDoneCommand(orderEventService);
+            case Order_booking_type_change:
+                return new OrderBookingTypeChangedCommand(orderEventService);
+            default:
+                throw new IllegalArgumentException("Unknown action: " + action);
+
+        }
+    }
+}
+
+interface AsyncActionCommand {
+    void execute(Order order);
+}
+
+class OrderCreateCommand implements AsyncActionCommand {
+    private final OrderEventService orderEventService;
+
+    OrderCreateCommand(OrderEventService orderEventService) {
+        this.orderEventService = orderEventService;
+    }
+
+    @Override
+    public void execute(Order order) {
+        orderEventService.postOrderCreation(order);
+    }
+}
+
+class OrderBookingTypeChangedCommand implements AsyncActionCommand {
+    private final OrderEventService orderEventService;
+
+    OrderBookingTypeChangedCommand(OrderEventService orderEventService) {
+        this.orderEventService = orderEventService;
+    }
+
+    @Override
+    public void execute(Order order) {
+        orderEventService.orderBookingTypeChanged(order);
+    }
+}
+
+class OrderPaymentDoneCommand implements AsyncActionCommand {
+    private final OrderEventService orderEventService;
+
+    OrderPaymentDoneCommand(OrderEventService orderEventService) {
+        this.orderEventService = orderEventService;
+    }
+
+    @Override
+    public void execute(Order order) {
+        orderEventService.postPaymentDone(order);
+    }
+}
+
+
+class OrderRefundCommand implements AsyncActionCommand {
+    private final OrderEventService orderEventService;
+
+    public OrderRefundCommand(OrderEventService orderEventService) {
+        this.orderEventService = orderEventService;
+    }
+
+    @Override
+    public void execute(Order order) {
+        orderEventService.postOrderRefund(order);
+    }
+}
+
+
+
+class OrderEventService {
+
+    public void orderBookingTypeChanged(Order order) {
+    }
+
+    public void postOrderCreation(Order order) {
+    }
+
+    public void postOrderConfirmation(Order order) {
+    }
+
+    public void postOrderRefund(Order order) {
+    }
+}
