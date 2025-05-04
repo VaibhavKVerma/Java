@@ -26,4 +26,35 @@ Class within a Class
 - It is a class which is parameterized with type parameters using <T> keyword
 - Bounded Generics
   - Upper Bound(<T extends Number>) meaning T can be a member of Number class or its subclass. Here we can use interface.
-  - Multi Bound
+  - Multi Bound(<T extends Class & Interface1 & Interface2 ...)
+  - Wildcards
+    - Upper Bounded Wildcard: <? extends 
+    - Lower Bounded Wildcard
+    - Unbounded Wildcard: <?> only you can read
+# POJO Class
+  - Plain Old Java Object
+  - Contains variables and its getter and setter methods
+  - Class should be public
+  - No annotations
+  - Public default constructor
+  - Should not extend any class or interface
+# Enum Class
+  - Cannot extend any class as in internally extends java.lang.Enum class
+  - Can implement interfaces
+  - No public constructor
+# Final Class
+  - Cannot be inherited
+# Singleton Class
+  - Create one and only one object
+  - Different ways of initializing:
+    - Eager initialization
+    - Lazy initialization
+    - Synchronization Block - Handle cases for concurrency by locking and unlocking, kind of slow
+    - Double Check Loop(there is memory issue, resolved through Volatile(read & write happens from memory not from cache) instance variable)
+    - Bill Pugh Solution
+    - Enum Singleton
+# Immutable Class
+  - Cannot change the object once it is created
+  - Class as 'final', members as private and final.
+  - Members are initialized using constructor
+  - No setter methods, only getter methods(copy).

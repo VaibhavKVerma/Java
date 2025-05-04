@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="9_MEMORY_MANAGEMENT" />
         <module name="10_11_12_13_CLASSES" />
+        <module name="14_15_Interface" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
