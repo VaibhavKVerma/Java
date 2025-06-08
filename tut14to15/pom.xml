@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.amigoscode</groupId>
-    <artifactId>14_15_Interface</artifactId>
+    <artifactId>tut14to15</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>

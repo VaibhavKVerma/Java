@@ -8,7 +8,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="9_MEMORY_MANAGEMENT" />
         <module name="10_11_12_13_CLASSES" />
-        <module name="14_15_Interface" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -16,6 +15,7 @@
       <module name="2_JAVA_WORKING" target="19" />
       <module name="4_PRIMITIVE_DATA_TYPES" target="19" />
       <module name="7_8_METHODS" target="19" />
+      <module name="tut14to15" target="19" />
     </bytecodeTargetLevel>
   </component>
 </project>
